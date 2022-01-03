@@ -206,7 +206,7 @@ namespace Holism.Generation
         {
             get
             {
-                var connectionString = Config.GetConnectionString(Database.Name);
+                var connectionString = InfraConfig.GetConnectionString(Database.Name);
                 return connectionString;
             }
         }
