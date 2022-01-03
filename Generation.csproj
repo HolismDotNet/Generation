@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="/HolismDotNet/Infra/DotNet.targets" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Holism.Generation</AssemblyName>
+    <RootNamespace>Holism.Generation</RootNamespace>
+  </PropertyGroup>
+
+</Project>
