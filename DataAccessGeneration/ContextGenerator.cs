@@ -44,10 +44,9 @@ public class {Repository}Context : DatabaseContext
             foreach (var column in table.ComputedColumns)
             {
                 result += @$"
-    builder.Entity<{table.SingularName}>()
-        .Property(p => p.{column.Name})
-        .HasComputedColumnSql(""{column.Formula}"");
-                ";
+        builder.Entity<{table.SingularName}>()
+            .Property(p => p.{column.Name})
+            .HasComputedColumnSql(""{column.Formula}"");";
             }
         }
         return result;
