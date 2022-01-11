@@ -63,7 +63,7 @@ namespace Holism.Generation
             {
                 var query = @$"
                     alter table `{tableName}`
-                    add `{column.Name}` varchar(100)
+                    add `{column.Name}` {column.SqlType}
                     as ({column.Formula}) virtual
                 ";
                 Holism.DataAccess.Database.Open(ConnectionString).Run(query);
