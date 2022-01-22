@@ -31,12 +31,11 @@ namespace Holism.Generation
 
         private string GenerateEnumForTable(Table table)
         {
-            var @enum = @$"namespace {OrganizationPrefix}.{Repository}.Models
+            var @enum = @$"namespace {Repository};
+
+public enum {table.SingularName}
 {{
-    public enum {table.SingularName}
-    {{
-        Unknwon = 0,{GetEnumItems(table)}
-    }}
+    Unknwon = 0,{GetEnumItems(table)}
 }}
 ";
             return @enum;
@@ -47,7 +46,7 @@ namespace Holism.Generation
             var enumItems = @"";
             foreach (var enumItem in table.EnumItems)
             {
-                enumItems += $"\n        {enumItem.Key} = {enumItem.Value},";
+                enumItems += $"\n    {enumItem.Key} = {enumItem.Value},";
             }
             return enumItems.Trim(',');
         }
@@ -76,7 +75,7 @@ namespace Holism.Generation
             {
                 entityInterfaceInheritance += "IEntity";
             }
-            string @class = $@"namespace {OrganizationPrefix}.{Repository}.Models;
+            string @class = $@"namespace {Repository};
 
 public class {table.SingularName} : {entityInterfaceInheritance}{interfaces}
 {{

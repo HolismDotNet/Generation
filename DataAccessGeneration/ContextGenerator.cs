@@ -20,7 +20,7 @@ public class ContextGenerator: Generator
     private string GenerateClass()
     {
 
-        string @class = @$"namespace {OrganizationPrefix}.{Repository}.DataAccess;
+        string @class = @$"namespace {Repository};
 
 public class {Repository}Context : DatabaseContext
 {{

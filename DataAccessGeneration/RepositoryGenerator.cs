@@ -20,7 +20,7 @@ public class RepositoryGenerator : Generator
 
     private string GenerateClass()
     {
-        string @class = $@"namespace {OrganizationPrefix}.{Repository}.DataAccess;
+        string @class = $@"namespace {Repository};
 
 public class Repository
 {{
@@ -33,9 +33,9 @@ public class Repository
     private string GenerateProperties()
     {
         var properties = "";
-        var last = Database.Tables.Last();
         var tables = Database.Tables;
         tables = tables.OrderBy(i => i.Name).ToList();
+        var last = tables.Last();
 
         foreach (var item in tables)
         {
@@ -44,11 +44,11 @@ public class Repository
                 continue;
             }
             properties +=
-                $@"    public static Repository<{(GetSingularName(item))}> {item.SingularName}
+                $@"    public static Repository<{Repository}.{(GetSingularName(item))}> {item.SingularName}
     {{
         get
         {{
-            return new Repository<{GetSingularName(item)}>(new {Repository}Context());
+            return new Repository<{Repository}.{GetSingularName(item)}>(new {Repository}Context());
         }}
     }}";
             if (last != item)
@@ -57,6 +57,6 @@ public class Repository
             }
         }
 
-        return properties;
+        return properties.TrimEnd();
     }
 }
