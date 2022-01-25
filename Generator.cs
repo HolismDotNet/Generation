@@ -222,15 +222,5 @@ namespace Holism.Generation
                 return masterConnectionString;
             }
         }
-
-        public string GetSingularName(Table table)
-        {
-            var conflictingNames = new List<string> { "TimeZone" };
-            if (conflictingNames.Contains(table.SingularName))
-            {
-                return $"{Repository}.{table.SingularName}";
-            }
-            return table.SingularName;
-        }
     }
 }

@@ -44,11 +44,11 @@ public class Repository
                 continue;
             }
             properties +=
-                $@"    public static Repository<{Repository}.{(GetSingularName(item))}> {item.SingularName}
+                $@"    public static Repository<{Repository}.{item.SingularName}> {item.SingularName}
     {{
         get
         {{
-            return new Repository<{Repository}.{GetSingularName(item)}>(new {Repository}Context());
+            return new Repository<{Repository}.{item.SingularName}>(new {Repository}Context());
         }}
     }}";
             if (last != item)

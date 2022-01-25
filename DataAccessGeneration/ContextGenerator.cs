@@ -63,7 +63,7 @@ public class {Repository}Context : DatabaseContext
             {
                 continue;
             }
-            properties += $"\n\n    public DbSet<{GetSingularName(item)}> {item.PluralName} {{ get; set; }}";
+            properties += $"\n\n    public DbSet<{Repository}.{item.SingularName}> {item.PluralName} {{ get; set; }}";
         }
         return properties;
     }
