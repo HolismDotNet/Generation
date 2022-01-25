@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Holism.Infra;
 using Holism.Validation;
-using Microsoft.Data.SqlClient;
 
 namespace Holism.Generation
 {
