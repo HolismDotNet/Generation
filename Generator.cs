@@ -30,14 +30,12 @@ namespace Holism.Generation
                 Path.Combine(RepositoryPath, "Database.json");
             if (!File.Exists(databaseJsonFile))
             {
-                throw new ServerException(@$"Database.json file does not exist {
-                        RepositoryPath}");
+                throw new ServerException(@$"Database.json file does not exist { Repositoryath}");
             }
             var databaseJson = File.ReadAllText(databaseJsonFile);
             if (!databaseJson.IsJson())
             {
-                throw new ServerException(@$"Database.json does not containe valid JSON in {
-                        RepositoryPath}");
+                throw new ServerException(@$"Database.json does not containe valid JSON in { Repositoryath}");
             }
             Database = databaseJson.Deserialize<Database>();
         }
