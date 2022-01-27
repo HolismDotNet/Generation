@@ -67,6 +67,14 @@ public class Column
                 }
                 return "int";
             }
+            if (Type == "long")
+            {
+                if (IsNullable)
+                {
+                    return "long?";
+                }
+                return "long";
+            }
             if (Type == "boolean")
             {
                 if (IsNullable)
