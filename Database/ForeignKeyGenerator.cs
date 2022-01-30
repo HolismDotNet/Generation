@@ -1,11 +1,11 @@
-using Holism.Generation;
+using Generation;
 using System;
 using Holism.Infra;
 using System.Data;
 using System.Linq;
 using Humanizer;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class ForeignKeyGenerator : Generator
     {
@@ -30,14 +30,14 @@ namespace Holism.Generation
                 where constraint_schema = '{Database.Name}'
                 and referenced_table_schema is not null
             ";
-            var result = Holism.DataAccess.Database.Open(ConnectionString).Get(query);
+            var result = DataAccess.Database.Open(ConnectionString).Get(query);
             foreach (DataRow row in result.Rows)
             {
                 query = @$"
                     alter table `{row["table_name"].ToString()}`
                     drop constraint {row["constraint_name"].ToString()}
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
         }
 
@@ -51,7 +51,7 @@ namespace Holism.Generation
                 on update cascade
                 on delete cascade
                 ";
-            Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+            DataAccess.Database.Open(ConnectionString).Run(query);
         }
 
         public void CreateForeignKey(Table table, Column column, bool cascadeDrop = true)
@@ -76,7 +76,7 @@ namespace Holism.Generation
                     {(column.CascadeDelete ? "on delete cascade" : "")}
                     ";
                 }
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
             catch (Exception ex)
             {

@@ -1,8 +1,8 @@
-using Holism.Generation;
+using Generation;
 using System;
 using Holism.Infra;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class ViewGenerator : Generator
     {
@@ -31,13 +31,13 @@ namespace Holism.Generation
             var query = @$"
                 drop view if exists `{view.Name}`
             ";
-            Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+            DataAccess.Database.Open(ConnectionString).Run(query);
             query = @$"
                 CREATE view {view.Name}
                 as
                 {view.ConcatenatedQuery}
             ";
-            Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+            DataAccess.Database.Open(ConnectionString).Run(query);
         }
     }
 }

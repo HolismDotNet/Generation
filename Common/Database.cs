@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Holism.Generation;
+namespace Generation;
 
 public class Database
 {

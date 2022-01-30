@@ -1,6 +1,6 @@
 using Holism.Infra;
 
-namespace Holism.Generation;
+namespace Generation;
 
 public class Column
 {

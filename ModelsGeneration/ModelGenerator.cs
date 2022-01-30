@@ -6,9 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Holism.Infra;
-using Holism.Generation;
+using Generation;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class ModelGenerator : Generator
     {
@@ -75,6 +75,22 @@ public enum {table.SingularName}
             {
                 entityInterfaceInheritance += "IEntity";
             }
+            if (table.Columns.Any(i => i.Name == "Slug"))
+            {
+                entityInterfaceInheritance += ", ISlug";
+            }
+            if (table.Columns.Any(i => i.Name == "Key"))
+            {
+                entityInterfaceInheritance += ", IKey";
+            }
+            if (table.Columns.Any(i => i.Name == "Order"))
+            {
+                entityInterfaceInheritance += ", IOrder";
+            }
+            // if (table.Columns.Any(i => i.Name == "IsSystemic"))
+            // {
+            //     entityInterfaceInheritance += ", ISystemic"
+            // }
             string @class = $@"namespace {Repository};
 
 public class {table.SingularName} : {entityInterfaceInheritance}{interfaces}

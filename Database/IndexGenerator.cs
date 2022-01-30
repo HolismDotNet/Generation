@@ -1,10 +1,10 @@
-using Holism.Generation;
+using Generation;
 using System;
 using Holism.Infra;
 using System.Data;
 using System.Linq;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class IndexGenerator : Generator
     {
@@ -38,13 +38,13 @@ namespace Holism.Generation
                 from `{table.Name}`
                 where key_name != 'PRIMARY'
             ";
-            var result = Holism.DataAccess.Database.Open(ConnectionString).Get(query);
+            var result = DataAccess.Database.Open(ConnectionString).Get(query);
             foreach (DataRow row in result.Rows)
             {
                 query = @$"
                     drop index if exists {row["key_name"].ToString()} on `{table.Name}`
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Holism.Generation
                     create {(column.IsUnique ? "unique" : "")} index IX_{table.Name}_{(column.IsUnique ? "Unique_" : "")}{column.Name}
                     on `{table.Name}` (`{column.Name}`)
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
             catch (Exception ex)
             {
@@ -82,7 +82,7 @@ namespace Holism.Generation
                     create {(index.IsUnique ? "unique" : "")} index IX_{table.Name}_{(index.IsUnique ? "Unique_" : "")}{columnNames}
                     on `{table.Name}` ({columns})
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
             catch (Exception ex)
             {

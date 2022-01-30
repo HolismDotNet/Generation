@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Holism.Infra;
 using Holism.Validation;
 
-namespace Holism.Generation
+namespace Generation
 {
     public abstract class Generator
     {
@@ -59,7 +59,7 @@ namespace Holism.Generation
                     table_schema,
                     table_name;         
             ";
-            var views = Holism.DataAccess.Database.Open(ConnectionString).Get(query);
+            var views = DataAccess.Database.Open(ConnectionString).Get(query);
             foreach (DataRow row in views.Rows)
             {
                 var table = new Table();
@@ -78,7 +78,7 @@ namespace Holism.Generation
                 where Field != 'Id'
             ";
             var columns = new List<Column>();
-            var definitionsTable = Holism.DataAccess.Database
+            var definitionsTable = DataAccess.Database
                 .Open(ConnectionString)
                 .Get(query);
             for (int i = 0; i < definitionsTable.Rows.Count; i++)

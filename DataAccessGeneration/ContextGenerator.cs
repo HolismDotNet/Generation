@@ -2,7 +2,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
 
-namespace Holism.Generation;
+namespace Generation;
 
 public class ContextGenerator: Generator 
 {

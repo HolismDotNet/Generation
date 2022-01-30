@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Holism.Infra;
 using System.Linq;
 
-namespace Holism.Generation;
+namespace Generation;
 
 public class View
 {

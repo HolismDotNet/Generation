@@ -1,4 +1,4 @@
-namespace Holism.Generation;
+namespace Generation;
 
 public class CheckConstraint
 {

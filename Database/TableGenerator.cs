@@ -1,11 +1,11 @@
 using Holism.Validation;
-using Holism.Generation;
+using Generation;
 using System;
 using Holism.Infra;
 using System.Linq;
 using System.IO;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class TableGenerator : Generator
     {
@@ -54,7 +54,7 @@ namespace Holism.Generation
                     Id bigint not null primary key {((table.OneToOneWith.IsSomething() || table.IsEnum) ? "" : "auto_increment")}
                 )
             ";
-            Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+            DataAccess.Database.Open(ConnectionString).Run(query);
         }
 
         public void InsertEnumValues(Table table)
@@ -77,7 +77,7 @@ namespace Holism.Generation
                     insert ignore into `{table.Name}` (Id, `Key`, `Order`)
                     values ({enumItem.Value}, N'{enumItem.Key}', {(enumItem.Order.HasValue ? enumItem.Order.Value.ToString() : "null")})
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
         }
 

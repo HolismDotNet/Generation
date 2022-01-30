@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Holism.Generation;
+namespace Generation;
 
 public class RepositoryGenerator : Generator
 {

@@ -4,8 +4,6 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>Holism.Generation</AssemblyName>
-    <RootNamespace>Holism.Generation</RootNamespace>
   </PropertyGroup>
 
 </Project>

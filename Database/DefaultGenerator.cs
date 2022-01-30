@@ -1,10 +1,10 @@
-using Holism.DataAccess;
-using Holism.Generation;
+using DataAccess;
+using Generation;
 using System.Collections.Generic;
 using Holism.Infra;
 using System.Data;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class DefaultGenerator : Generator
     {
@@ -38,14 +38,14 @@ namespace Holism.Generation
                     table_name,
                     ordinal_position;
             ";
-            var result = Holism.DataAccess.Database.Open(ConnectionString).Get(query);
+            var result = DataAccess.Database.Open(ConnectionString).Get(query);
             foreach (DataRow row in result.Rows)
             {
                 query = @$"
                     alter table `{table.Name}`
                     alter `{row["column_name"].ToString()}` drop default
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Holism.Generation
                 alter table `{tableName}`
                 alter `{column.Name}` set default {column.DefaultSqlText}
             ";
-            Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+            DataAccess.Database.Open(ConnectionString).Run(query);
         }
     }
 }

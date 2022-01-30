@@ -1,9 +1,9 @@
-using Holism.Generation;
+using Generation;
 using System.Text.RegularExpressions;
 using System;
 using Holism.Infra;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class DatabaseGenerator : Generator
     {
@@ -30,7 +30,7 @@ namespace Holism.Generation
             var query = @$"
                 create database if not exists {Database.Name}
             ";
-            Holism.DataAccess.Database.Open(MasterDatabaseConnectionString).Run(query);
+            DataAccess.Database.Open(MasterDatabaseConnectionString).Run(query);
             // todo: set to simple model to reduce space
         }
     }

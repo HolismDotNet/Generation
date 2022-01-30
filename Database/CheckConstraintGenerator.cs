@@ -1,11 +1,11 @@
-using Holism.DataAccess;
-using Holism.Generation;
+using DataAccess;
+using Generation;
 using System.Collections.Generic;
 using Holism.Infra;
 using System.Data;
 using System;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class CheckConstraintGenerator : Generator
     {
@@ -45,14 +45,14 @@ namespace Holism.Generation
                 order by table_schema,
                         table_name;
             ";
-            var result = Holism.DataAccess.Database.Open(ConnectionString).Get(query);
+            var result = DataAccess.Database.Open(ConnectionString).Get(query);
             foreach (DataRow row in result.Rows)
             {
                 query = @$"
                     alter table `{table.Name}`
                     drop constraint `{row["constraint_name"].ToString()}`
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Holism.Generation
                 add constraint Ck_{tableName}_NonEmpty{column.Name}
                 check (`{column.Name}` != '{Guid.Empty.ToString()}')
             ";
-            Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+            DataAccess.Database.Open(ConnectionString).Run(query);
         }
 
         public void CreateCheck(string tableName, CheckConstraint check)
@@ -73,7 +73,7 @@ namespace Holism.Generation
                 add constraint Ck_{tableName}_{check.Name}
                 check ({check.Query})
             ";
-            Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+            DataAccess.Database.Open(ConnectionString).Run(query);
         }
     }
 }

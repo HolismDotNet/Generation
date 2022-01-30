@@ -4,7 +4,7 @@ using Holism.Infra;
 using Humanizer;
 using Humanizer.Inflections;
 
-namespace Holism.Generation;
+namespace Generation;
 
 public class Table
 {

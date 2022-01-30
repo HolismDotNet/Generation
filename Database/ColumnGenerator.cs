@@ -1,12 +1,12 @@
-using Holism.DataAccess;
-using Holism.Generation;
+using DataAccess;
+using Generation;
 using System.Collections.Generic;
 using Holism.Infra;
 using System.Linq;
 using System;
 using System.Data;
 
-namespace Holism.Generation
+namespace Generation
 {
     public class ColumnGenerator : Generator
     {
@@ -46,14 +46,14 @@ namespace Holism.Generation
                 and table_name = '{table.Name}'
                 and is_generated != 'NEVER'
             ";
-            var result = Holism.DataAccess.Database.Open(ConnectionString).Get(query);
+            var result = DataAccess.Database.Open(ConnectionString).Get(query);
             foreach (DataRow row in result.Rows)
             {
                 query = @$"
                     alter table `{table.Name}`
                     drop `{row["column_name"].ToString()}`
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Holism.Generation
                     add `{column.Name}` {column.SqlType}
                     as ({column.Formula}) virtual
                 ";
-                Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                DataAccess.Database.Open(ConnectionString).Run(query);
             }
             else 
             {
@@ -77,14 +77,14 @@ namespace Holism.Generation
                     and table_name = '{tableName}'
                     and column_name = '{column.Name}'
                 ";
-                var count = Holism.DataAccess.Database.Open(ConnectionString).Get(query).Rows[0][0].ToString().ToInt();
+                var count = DataAccess.Database.Open(ConnectionString).Get(query).Rows[0][0].ToString().ToInt();
                 if (count == 0)
                 {
                     query = @$"
                         alter table `{tableName}`
                         add `{column.Name}` {column.SqlType} {(column.IsNullable ? "null" : "not null")}
                     ";
-                    Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                    DataAccess.Database.Open(ConnectionString).Run(query);
                 }
                 else 
                 {
@@ -92,7 +92,7 @@ namespace Holism.Generation
                         alter table `{tableName}`
                         modify `{column.Name}` {column.SqlType} {(column.IsNullable ? "null" : "not null")}
                     ";
-                    Holism.DataAccess.Database.Open(ConnectionString).Run(query);
+                    DataAccess.Database.Open(ConnectionString).Run(query);
                 }
             }
         }
