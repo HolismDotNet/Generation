@@ -1,11 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using Holism.Infra;
-using Humanizer;
-using Humanizer.Inflections;
-
-namespace Generation;
-
 public class Table
 {
     private List<Column> columns = new List<Column>();

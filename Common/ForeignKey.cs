@@ -1,5 +1,3 @@
-namespace Generation;
-
 public class ForeignKey
 {
     public string ReferencingTable { get; set; }

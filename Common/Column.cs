@@ -1,7 +1,3 @@
-using Holism.Infra;
-
-namespace Generation;
-
 public class Column
 {
     private string name;

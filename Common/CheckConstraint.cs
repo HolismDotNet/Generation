@@ -1,5 +1,3 @@
-namespace Generation;
-
 public class CheckConstraint
 {
     public string Name { get; set; }

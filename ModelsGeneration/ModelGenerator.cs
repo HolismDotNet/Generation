@@ -1,97 +1,85 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Holism.Infra;
-using Generation;
-
-namespace Generation
+﻿public class ModelGenerator : Generator
 {
-    public class ModelGenerator : Generator
+    public void GenerateModels()
     {
-        public void GenerateModels()
+        LoadViews();
+        foreach (var table in Database.Tables)
         {
-            LoadViews();
-            foreach (var table in Database.Tables)
+            if (table.IsEnum)
             {
-                if (table.IsEnum)
-                {
-                    table.GeneratedCode = GenerateEnumForTable(table);
-                }
-                else
-                {
-                    table.GeneratedCode = GenerateClassForTable(table);
-                }
+                table.GeneratedCode = GenerateEnumForTable(table);
             }
-            SaveModels();
+            else
+            {
+                table.GeneratedCode = GenerateClassForTable(table);
+            }
         }
+        SaveModels();
+    }
 
-        private string GenerateEnumForTable(Table table)
-        {
-            var @enum = @$"namespace {Repository};
+    private string GenerateEnumForTable(Table table)
+    {
+        var @enum = @$"namespace {Repository};
 
 public enum {table.SingularName}
 {{
     Unknwon = 0,{GetEnumItems(table)}
 }}
 ";
-            return @enum;
-        }
+        return @enum;
+    }
 
-        private string GetEnumItems(Table table)
+    private string GetEnumItems(Table table)
+    {
+        var enumItems = @"";
+        foreach (var enumItem in table.EnumItems)
         {
-            var enumItems = @"";
-            foreach (var enumItem in table.EnumItems)
-            {
-                enumItems += $"\n    {enumItem.Key} = {enumItem.Value},";
-            }
-            return enumItems.Trim(',');
+            enumItems += $"\n    {enumItem.Key} = {enumItem.Value},";
         }
+        return enumItems.Trim(',');
+    }
 
-        private string GenerateClassForTable(Table table)
+    private string GenerateClassForTable(Table table)
+    {
+        var properties = "";
+        foreach (var column in table.Columns)
         {
-            var properties = "";
-            foreach (var column in table.Columns)
-            {
-                properties += GeneratePropertyForColumn(column) + "\n" + "\n";
-            }
-            properties += "    public dynamic RelatedItems { get; set; }" + "\n" + "\n";
-            var @namespace = Namespace;
-            string interfaces = "";
-            if (Interfaces.Count > 0)
-            {
-                interfaces = ", " + Interfaces.ToCsv();
-            }
-            var entityInterfaceInheritance = "";
-            var isGuidEntity = table.HasGuid || table.Columns.Any(i => i.Name == "Guid");
-            if (isGuidEntity)
-            {
-                entityInterfaceInheritance += "IGuidEntity";
-            }
-            else
-            {
-                entityInterfaceInheritance += "IEntity";
-            }
-            if (table.Columns.Any(i => i.Name == "Slug"))
-            {
-                entityInterfaceInheritance += ", ISlug";
-            }
-            if (table.Columns.Any(i => i.Name == "Key"))
-            {
-                entityInterfaceInheritance += ", IKey";
-            }
-            if (table.Columns.Any(i => i.Name == "Order"))
-            {
-                entityInterfaceInheritance += ", IOrder";
-            }
-            // if (table.Columns.Any(i => i.Name == "IsSystemic"))
-            // {
-            //     entityInterfaceInheritance += ", ISystemic"
-            // }
-            string @class = $@"namespace {Repository};
+            properties += GeneratePropertyForColumn(column) + "\n" + "\n";
+        }
+        properties += "    public dynamic RelatedItems { get; set; }" + "\n" + "\n";
+        var @namespace = Namespace;
+        string interfaces = "";
+        if (Interfaces.Count > 0)
+        {
+            interfaces = ", " + Interfaces.ToCsv();
+        }
+        var entityInterfaceInheritance = "";
+        var isGuidEntity = table.HasGuid || table.Columns.Any(i => i.Name == "Guid");
+        if (isGuidEntity)
+        {
+            entityInterfaceInheritance += "IGuidEntity";
+        }
+        else
+        {
+            entityInterfaceInheritance += "IEntity";
+        }
+        if (table.Columns.Any(i => i.Name == "Slug"))
+        {
+            entityInterfaceInheritance += ", ISlug";
+        }
+        if (table.Columns.Any(i => i.Name == "Key"))
+        {
+            entityInterfaceInheritance += ", IKey";
+        }
+        if (table.Columns.Any(i => i.Name == "Order"))
+        {
+            entityInterfaceInheritance += ", IOrder";
+        }
+        // if (table.Columns.Any(i => i.Name == "IsSystemic"))
+        // {
+        //     entityInterfaceInheritance += ", ISystemic"
+        // }
+        string @class = $@"namespace {Repository};
 
 public class {table.SingularName} : {entityInterfaceInheritance}{interfaces}
 {{
@@ -105,44 +93,43 @@ public class {table.SingularName} : {entityInterfaceInheritance}{interfaces}
 {properties}
 }}
 ";
-            @class = Regex.Replace(@class, @"(\n){2}\n", "$1");
-            return @class;
-        }
-
-        private string GeneratePropertyForColumn(Column column)
-        {
-            string property;
-            property = $@"    public {column.DotNetType} {column.Name} {{ get; set; }}";
-            return property;
-        }
-
-        public string Namespace 
-        { 
-            get 
-            {
-                return $"{OrganizationPrefix}.{Repository}";
-            }
-        }
-
-        public List<string> Interfaces
-        {
-            get
-            {
-                return new List<string> { };
-            }
-        }
-
-        public void SaveModels()
-        {
-            var modelsFolder = PrepareOutputFolder("Models");
-            foreach (var model in Database.Tables)
-            {
-                var targetPath = Path.Combine(modelsFolder, (model.IsView ? @"Views" : ""), model.SingularName + ".cs");
-                var targetDirectory = Path.GetDirectoryName(targetPath);
-                TrySave(model.GeneratedCode, targetPath, targetDirectory);
-            }
-        }
-
-        public string OutputFolder { get; }
+        @class = Regex.Replace(@class, @"(\n){2}\n", "$1");
+        return @class;
     }
+
+    private string GeneratePropertyForColumn(Column column)
+    {
+        string property;
+        property = $@"    public {column.DotNetType} {column.Name} {{ get; set; }}";
+        return property;
+    }
+
+    public string Namespace 
+    { 
+        get 
+        {
+            return $"{OrganizationPrefix}.{Repository}";
+        }
+    }
+
+    public List<string> Interfaces
+    {
+        get
+        {
+            return new List<string> { };
+        }
+    }
+
+    public void SaveModels()
+    {
+        var modelsFolder = PrepareOutputFolder("Models");
+        foreach (var model in Database.Tables)
+        {
+            var targetPath = Path.Combine(modelsFolder, (model.IsView ? @"Views" : ""), model.SingularName + ".cs");
+            var targetDirectory = Path.GetDirectoryName(targetPath);
+            TrySave(model.GeneratedCode, targetPath, targetDirectory);
+        }
+    }
+
+    public string OutputFolder { get; }
 }

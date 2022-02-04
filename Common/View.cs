@@ -1,9 +1,3 @@
-using System.Collections.Generic;
-using Holism.Infra;
-using System.Linq;
-
-namespace Generation;
-
 public class View
 {
     public string Name { get; set; }

@@ -1,9 +1,3 @@
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Linq;
-
-namespace Generation;
-
 public class ContextGenerator: Generator 
 {
     public void GenerateContext()
