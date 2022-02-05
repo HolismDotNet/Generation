@@ -124,7 +124,7 @@ public class Table
                 }
                 columns.Add(new Column {
                     Name = "Order",
-                    Type = "string",
+                    Type = "long",
                     HasDefault = true,
                     DefaultSqlText = "0"
                 });
