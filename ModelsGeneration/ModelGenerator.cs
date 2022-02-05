@@ -53,15 +53,10 @@ public enum {table.SingularName}
         {
             interfaces = ", " + Interfaces.ToCsv();
         }
-        var entityInterfaceInheritance = "";
-        var isGuidEntity = table.HasGuid || table.Columns.Any(i => i.Name == "Guid");
-        if (isGuidEntity)
+        var entityInterfaceInheritance = "IEntity";
+        if (table.HasGuid || table.Columns.Any(i => i.Name == "Guid"))
         {
-            entityInterfaceInheritance += "IGuidEntity";
-        }
-        else
-        {
-            entityInterfaceInheritance += "IEntity";
+            entityInterfaceInheritance += ", IGuid";
         }
         if (table.Columns.Any(i => i.Name == "Slug"))
         {
@@ -74,6 +69,10 @@ public enum {table.SingularName}
         if (table.Columns.Any(i => i.Name == "Order"))
         {
             entityInterfaceInheritance += ", IOrder";
+        }
+        if (table.Columns.Any(i => i.Name == "ParentId"))
+        {
+            entityInterfaceInheritance += ", IParent";
         }
         // if (table.Columns.Any(i => i.Name == "IsSystemic"))
         // {
