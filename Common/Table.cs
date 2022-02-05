@@ -61,6 +61,10 @@ public class Table
 
     public bool HasGuid { get; set; }
 
+    public bool HasKey { get; set; }
+
+    public bool HasOrder { get; set; }
+
     public bool IsEnum { get; set; }
 
     public List<Column> Columns
@@ -91,7 +95,39 @@ public class Table
                 {
                     columns.Remove(guidColumn);
                 }
-                columns.Insert(0, new Column { Name = "Guid" , Type = "Guid" , HasDefault = true, DefaultSqlText = "uuid()"});
+                columns.Insert(0, new Column { 
+                    Name = "Guid", 
+                    Type = "Guid", 
+                    HasDefault = true, 
+                    DefaultSqlText = "uuid()"
+                });
+            }
+            if (HasKey)
+            {
+                var keyColumn = columns.FirstOrDefault(i => i.Name == "Key");
+                if (keyColumn != null)
+                {
+                    columns.Remove(keyColumn);
+                }
+                columns.Add(new Column { 
+                    Name = "Key",
+                    Type = "string",
+                    IsUnique = true
+                });
+            }
+            if (HasOrder)
+            {
+                var orderColumn = columns.FirstOrDefault(i => i.Name == "Order");
+                if (orderColumn != null)
+                {
+                    columns.Remove(orderColumn);
+                }
+                columns.Add(new Column {
+                    Name = "Order",
+                    Type = "string",
+                    HasDefault = true,
+                    DefaultSqlText = "0"
+                });
             }
             return columns;
         }
