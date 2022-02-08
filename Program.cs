@@ -1,25 +1,4 @@
-﻿global using DataAccess;
-global using Infra;
-global using Validation;
-global using Humanizer;
-global using Humanizer.Inflections;
-global using System.Collections.Generic;
-global using System.Data;
-global using System.Dynamic;
-global using System.IO;
-global using System.Linq.Expressions;
-global using System.Linq;
-global using System.Net.Http.Headers;
-global using System.Net.Http;
-global using System.Net;
-global using System.Text.Json;
-global using System.Text.RegularExpressions;
-global using System.Text;
-global using System.Threading.Tasks;
-global using System.Threading;
-global using System;
-
-Generator.RepositoryPath = args[0];
+﻿Generator.RepositoryPath = args[0];
 Generator.Organization = args[1];
 Generator.OrganizationPrefix = args[2];
 Generator.Repository = args[3];
