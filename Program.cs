@@ -1,6 +1,6 @@
 ﻿global using DataAccess;
-global using Holism.Infra;
-global using Holism.Validation;
+global using Infra;
+global using Validation;
 global using Humanizer;
 global using Humanizer.Inflections;
 global using System.Collections.Generic;
