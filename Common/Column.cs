@@ -103,6 +103,10 @@ public class Column
             {
                 return "datetime";
             }
+            if (name.Contains("Content"))
+            {
+                return "longtext";
+            }
             if (Type == "int")
             {
                 return "int";
