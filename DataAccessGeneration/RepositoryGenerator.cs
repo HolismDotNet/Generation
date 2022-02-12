@@ -37,11 +37,11 @@ public class Repository
                 continue;
             }
             properties +=
-                $@"    public static Repository<{Repository}.{item.SingularName}> {item.SingularName}
+                $@"    public static Write<{Repository}.{item.SingularName}> {item.SingularName}
     {{
         get
         {{
-            return new Repository<{Repository}.{item.SingularName}>(new {Repository}Context());
+            return new Write<{Repository}.{item.SingularName}>(new {Repository}Context());
         }}
     }}";
             if (last != item)
