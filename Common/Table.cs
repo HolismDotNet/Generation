@@ -112,7 +112,9 @@ public class Table
                 columns.Add(new Column { 
                     Name = "Key",
                     Type = "string",
-                    IsUnique = true
+                    IsUnique = true,
+                    HasDefault = true,
+                    DefaultSqlText = "uuid()"
                 });
             }
             if (HasOrder)
