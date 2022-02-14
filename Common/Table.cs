@@ -65,6 +65,8 @@ public class Table
 
     public bool HasOrder { get; set; }
 
+    public bool HasSlug { get; set; }
+
     public bool IsEnum { get; set; }
 
     public List<Column> Columns
@@ -129,6 +131,20 @@ public class Table
                     Type = "long",
                     HasDefault = true,
                     DefaultSqlText = "0"
+                });
+            }
+            if (HasSlug)
+            {
+                var slugColumn = columns.FirstOrDefault(i => i.Name == "Slug");
+                if (slugColumn != null)
+                {
+                    columns.Remove(slugColumn);
+                }
+                columns.Add(new Column {
+                    Name = "Slug",
+                    Type = "string",
+                    HasDefault = true,
+                    DefaultSqlText = "uuid()"
                 });
             }
             return columns;
