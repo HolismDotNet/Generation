@@ -48,6 +48,10 @@ public class ForeignKeyGenerator : Generator
     public void CreateForeignKey(Table table, Column column, bool cascadeDrop = true)
     {
         var referencedTableName = column.Name.Replace("Id", "").Pluralize();
+        if  (referencedTableName == column.Name.Replace("Id", ""))
+        {
+            referencedTableName = referencedTableName + "s";
+        }
         if (column.Name == "ParentId")
         {
             referencedTableName = table.Name;
