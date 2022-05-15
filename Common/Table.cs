@@ -143,6 +143,7 @@ public class Table
                 columns.Add(new Column {
                     Name = "Slug",
                     Type = "string",
+                    IsUnique = true,
                     HasDefault = true,
                     DefaultSqlText = "uuid()"
                 });
