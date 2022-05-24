@@ -76,7 +76,6 @@ public class Table
             if (IsEnum)
             {
                 columns = new List<Column>();
-                HasGuid = true;
                 columns
                     .Add(new Column { 
                         Name = "Key", 
