@@ -86,7 +86,7 @@ public class Table
                     .Add(new Column {
                         Name = "Order",
                         Type = "int",
-                        IsNullable = true
+                        nullable = true
                     });
             }
             if (HasGuid)

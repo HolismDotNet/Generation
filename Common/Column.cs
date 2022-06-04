@@ -33,7 +33,7 @@ public class Column
         {
             if (Name.EndsWith("Guid"))
             {
-                if (IsNullable)
+                if (nullable)
                 {
                     return "Guid?";
                 }
@@ -41,7 +41,7 @@ public class Column
             }
             if (Name.EndsWith("Id"))
             {
-                if (IsNullable)
+                if (nullable)
                 {
                     return "long?";
                 }
@@ -49,7 +49,7 @@ public class Column
             }
             if (Name.Contains("Date"))
             {
-                if (IsNullable)
+                if (nullable)
                 {
                     return "DateTime?";
                 }
@@ -57,7 +57,7 @@ public class Column
             }
             if (Type == "int")
             {
-                if (IsNullable)
+                if (nullable)
                 {
                     return "int?";
                 }
@@ -65,7 +65,7 @@ public class Column
             }
             if (Type == "long")
             {
-                if (IsNullable)
+                if (nullable)
                 {
                     return "long?";
                 }
@@ -73,7 +73,7 @@ public class Column
             }
             if (Type == "boolean")
             {
-                if (IsNullable)
+                if (nullable)
                 {
                     return "bool?";
                 }
@@ -131,7 +131,7 @@ public class Column
         }
     }
 
-    public bool IsNullable { get; set; }
+    public bool nullable { get; set; }
     
     public bool HasDefault { get; set; }
 

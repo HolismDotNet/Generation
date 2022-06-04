@@ -72,7 +72,7 @@ public class ColumnGenerator : Generator
             {
                 query = @$"
                     alter table `{tableName}`
-                    add `{column.Name}` {column.SqlType} {(column.IsNullable ? "null" : "not null")}
+                    add `{column.Name}` {column.SqlType} {(column.nullable ? "null" : "not null")}
                 ";
                 DataAccess.Database.Open(ConnectionString).Run(query);
             }
@@ -80,7 +80,7 @@ public class ColumnGenerator : Generator
             {
                 query = @$"
                     alter table `{tableName}`
-                    modify `{column.Name}` {column.SqlType} {(column.IsNullable ? "null" : "not null")}
+                    modify `{column.Name}` {column.SqlType} {(column.nullable ? "null" : "not null")}
                 ";
                 DataAccess.Database.Open(ConnectionString).Run(query);
             }

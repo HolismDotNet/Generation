@@ -72,7 +72,7 @@ public abstract class Generator
             var column = new Column();
             column.Name = definitionsTable.Rows[i]["Field"].ToString();
             column.Type = MapSqlTypeToType(definitionsTable.Rows[i]["Type"].ToString());
-            column.IsNullable = definitionsTable.Rows[i]["Null"].ToString() == "YES";
+            column.nullable = definitionsTable.Rows[i]["Null"].ToString() == "YES";
             // column.Precision = (byte?)definitionsTable.Rows[i]["precision"];
             // column.Scale = (byte?)definitionsTable.Rows[i]["scale"];
             columns.Add(column);
