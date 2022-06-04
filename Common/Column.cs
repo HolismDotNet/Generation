@@ -137,7 +137,7 @@ public class Column
 
     public string DefaultSqlText { get; set; }
 
-    public bool IsUnique { get; set; }
+    public bool unique { get; set; }
 
     public bool HasIndex { get; set; }
 

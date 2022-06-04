@@ -5,11 +5,11 @@ public class IndexGenerator : Generator
         DropIndexes(table);
         if (table.HasGuid)
         {
-            CreateIndex(table, new Column { Name = "Guid", IsUnique = true });
+            CreateIndex(table, new Column { Name = "Guid", unique = true });
         }
         foreach(var column in table.Columns)
         {
-            if (column.IsUnique || column.HasIndex)
+            if (column.unique || column.HasIndex)
             {
                 CreateIndex(table, column);
             }
@@ -45,7 +45,7 @@ public class IndexGenerator : Generator
         try
         {
             var query = @$"
-                create {(column.IsUnique ? "unique" : "")} index IX_{table.Name}_{(column.IsUnique ? "Unique_" : "")}{column.Name}
+                create {(column.unique ? "unique" : "")} index IX_{table.Name}_{(column.unique ? "Unique_" : "")}{column.Name}
                 on `{table.Name}` (`{column.Name}`)
             ";
             DataAccess.Database.Open(ConnectionString).Run(query);
@@ -71,7 +71,7 @@ public class IndexGenerator : Generator
                 .Select(i => $"`{i}`")
                 .Aggregate((a, b) => @$"{a}, {b}");
             var query = @$"
-                create {(index.IsUnique ? "unique" : "")} index IX_{table.Name}_{(index.IsUnique ? "Unique_" : "")}{columnNames}
+                create {(index.unique ? "unique" : "")} index IX_{table.Name}_{(index.unique ? "Unique_" : "")}{columnNames}
                 on `{table.Name}` ({columns})
             ";
             DataAccess.Database.Open(ConnectionString).Run(query);
