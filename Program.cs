@@ -7,3 +7,4 @@ new DatabaseGenerator().GenerateDatabase();
 new ModelGenerator().GenerateModels();
 new ContextGenerator().GenerateContext();
 new RepositoryGenerator().GenerateRepository();
+new InitialDataInserter().InsertData();
