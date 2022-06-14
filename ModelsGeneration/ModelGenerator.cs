@@ -74,6 +74,10 @@ public enum {table.SingularName}
         {
             entityInterfaceInheritance += ", IParent";
         }
+        if (table.Columns.Any(i => i.Name == "Content" && table.Name.EndsWith("Contents")))
+        {
+            entityInterfaceInheritance += ", IClob";
+        }
         // if (table.Columns.Any(i => i.Name == "IsSystemic"))
         // {
         //     entityInterfaceInheritance += ", ISystemic"
