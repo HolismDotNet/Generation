@@ -190,6 +190,7 @@ public abstract class Generator
         get
         {
             var connectionString = InfraConfig.GetConnectionString(Database.Name);
+            connectionString += " Allow User Variables=True;";
             return connectionString;
         }
     }
