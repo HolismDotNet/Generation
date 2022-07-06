@@ -80,7 +80,7 @@ public class Table
                     .Add(new Column { 
                         Name = "Key", 
                         Type = "string", 
-                        unique = true 
+                        Unique = true 
                     });
                 columns
                     .Add(new Column {
@@ -113,7 +113,7 @@ public class Table
                 columns.Add(new Column { 
                     Name = "Key",
                     Type = "string",
-                    unique = true,
+                    Unique = true,
                     HasDefault = true,
                     DefaultSqlText = "uuid()"
                 });
@@ -142,7 +142,7 @@ public class Table
                 columns.Add(new Column {
                     Name = "Slug",
                     Type = "string",
-                    unique = true,
+                    Unique = true,
                     HasDefault = true,
                     DefaultSqlText = "uuid()"
                 });
