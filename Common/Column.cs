@@ -79,6 +79,10 @@ public class Column
                 }
                 return "bool";
             }
+            if (Type == "json")
+            {
+                return "string";
+            }
             if (Type == null)
             {
                 return "string";
@@ -126,6 +130,10 @@ public class Column
             if (Type == "longText")
             {
                 return "longtext character set utf8";
+            }
+            if (Type == "json")
+            {
+                return "json";
             }
             return "varchar(400) character set utf8";
         }
