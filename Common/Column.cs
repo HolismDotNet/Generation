@@ -79,7 +79,7 @@ public class Column
                 }
                 return "bool";
             }
-            if (Type == "json")
+            if (Name == "Json")
             {
                 return "string";
             }
@@ -131,7 +131,7 @@ public class Column
             {
                 return "longtext character set utf8";
             }
-            if (Type == "json")
+            if (Name == "Json")
             {
                 return "json";
             }

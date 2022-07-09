@@ -39,9 +39,14 @@ public class CheckConstraintGenerator : Generator
         var result = DataAccess.Database.Open(ConnectionString).Get(query);
         foreach (DataRow row in result.Rows)
         {
+            var checkConstraintName = row["constraint_name"].ToString();
+            if (checkConstraintName == "Json")
+            {
+                continue;
+            }
             query = @$"
                 alter table `{table.Name}`
-                drop constraint `{row["constraint_name"].ToString()}`
+                drop constraint `{checkConstraintName}`
             ";
             DataAccess.Database.Open(ConnectionString).Run(query);
         }
