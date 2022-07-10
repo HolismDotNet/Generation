@@ -65,8 +65,9 @@ public class TableGenerator : Generator
         foreach (var enumItem in table.EnumItems)
         {
             var query = @$"
-                insert ignore into `{table.Name}` (Id, `Key`, `Order`)
+                insert into `{table.Name}` (Id, `Key`, `Order`)
                 values ({enumItem.Value}, N'{enumItem.Key}', {(enumItem.Order.HasValue ? enumItem.Order.Value.ToString() : "null")})
+                on duplicate key update `Key`=N'{enumItem.Key}'
             ";
             DataAccess.Database.Open(ConnectionString).Run(query);
         }
