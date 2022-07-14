@@ -97,7 +97,7 @@ public class Column
         {
             if (Name.EndsWith("Guid"))
             {
-                return "char(36)";
+                return "uuid";
             }
             if (Name.EndsWith("Id"))
             {

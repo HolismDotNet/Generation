@@ -93,7 +93,7 @@ public abstract class Generator
         {
             return "string";
         }
-        else if (sqlType == "char(36)")
+        else if (sqlType == "uuid")
         {
             return "Guid";
         }
